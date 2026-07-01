@@ -5,7 +5,7 @@ from datetime import datetime     ### IMPORTING
 
 CSV_FILE = 'weather.csv'
 COLUMNS = ['date', 'temperature', 'condition', 'humidity', 'wind_speed'] # Shared settings
-
+VALID_CONDITIONS = ['Sunny', 'Rainy', 'Cloudy', 'Snowy', 'Windy', 'Stormy']
 
 #### PERSON 1 _ gana elansary 
 
@@ -96,7 +96,6 @@ def record_breaking_temps():
     print(f"Coldest: {coldest['temperature']}C on {coldest['date']}")
 
 # Person 2 - Sara Alnajjar
-VALID_CONDITIONS = ['Sunny', 'Rainy', 'Cloudy', 'Snowy', 'Windy', 'Stormy']
 def normalize_condition(raw_condition):
     # Match user input against VALID_CONDITIONS, ignoring case and minor typos.
     # Returns the properly-capitalized condition, or None if no close match is found.
@@ -190,9 +189,8 @@ def view_all_observations():
 
     print(df.to_string(index=False))
 
-
 def temperature_trend_graph():
-    """Show a simple text bar-graph of temperature over time."""
+    # Show a simple text bar-graph of temperature over time.
     print("\n=== Temperature Trend Graph ===")
 
     df = load_observations()
@@ -200,7 +198,6 @@ def temperature_trend_graph():
     if df.empty:
         print("No observations recorded yet.")
         return
-
     print("Each * represents 1°C\n")
     for _, row in df.iterrows():
         bar_length = max(int(round(row['temperature'])), 0)
