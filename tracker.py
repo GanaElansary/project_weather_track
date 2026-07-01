@@ -95,14 +95,10 @@ def record_breaking_temps():
     print(f"Coldest: {coldest['temperature']}C on {coldest['date']}")
 
 # Person 2 - Sara Alnajjar
-import difflib
-
 VALID_CONDITIONS = ['Sunny', 'Rainy', 'Cloudy', 'Snowy', 'Windy', 'Stormy']
-
-
 def normalize_condition(raw_condition):
-    """Match user input against VALID_CONDITIONS, ignoring case and minor typos.
-    Returns the properly-capitalized condition, or None if no close match is found."""
+    # Match user input against VALID_CONDITIONS, ignoring case and minor typos.
+    # Returns the properly-capitalized condition, or None if no close match is found.
     raw_condition = raw_condition.strip()
 
     # exact match, case-insensitive
@@ -127,7 +123,7 @@ def normalize_condition(raw_condition):
 
 
 def record_observation():
-    """Ask the user for one day's weather, validate it, and save it to the CSV."""
+    # Ask the user for one day's weather, validate it, and save it to the CSV.
     print("\n=== Record New Weather Observation ===")
 
     date = input("Enter date (MM-DD-YYYY): ")
@@ -182,7 +178,7 @@ def record_observation():
 
 
 def view_all_observations():
-    """Print every recorded observation in a clean table."""
+    # Print every recorded observation in a clean table.
     print("\n=== All Weather Observations ===")
 
     df = load_observations()
@@ -192,6 +188,23 @@ def view_all_observations():
         return
 
     print(df.to_string(index=False))
+
+def temperature_trend_graph():
+    """Show a simple text bar-graph of temperature over time."""
+    print("\n=== Temperature Trend Graph ===")
+
+    df = load_observations()
+
+    if df.empty:
+        print("No observations recorded yet.")
+        return
+
+    print("Each * represents 1°C\n")
+    for _, row in df.iterrows():
+        bar_length = max(int(round(row['temperature'])), 0)
+        bar = '*' * bar_length
+        print(f"{row['date']:>12} | {bar} ({row['temperature']}°C)")
+        
 #### PERSON 3 _ Hawraa Alawi
 
 # """Calculates and displays temperature averages and common conditions."""
