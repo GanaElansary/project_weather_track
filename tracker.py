@@ -39,7 +39,7 @@ def display_menu():
     print("7. Compare years")
     print("8. Record-breaking temperatures")
     print("9. Exit")
-    return input("Enter your choice (1-10): ")
+    return input("Enter your choice (1-9): ")
 
 ##### Main application loop. Ties every function together.
 
