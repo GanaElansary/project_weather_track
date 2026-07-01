@@ -35,11 +35,10 @@ def display_menu():
     print("3. Search observations by date")
     print("4. View all observations")
     print("5. Temperature trend graph")
-    print("6. Filter by month or season")
-    print("7. Predict tomorrow's weather")
-    print("8. Compare years")
-    print("9. Record-breaking temperatures")
-    print("10. Exit")
+    print("6. Predict tomorrow's weather")
+    print("7. Compare years")
+    print("8. Record-breaking temperatures")
+    print("9. Exit")
     return input("Enter your choice (1-10): ")
 
 ##### Main application loop. Ties every function together.
@@ -63,14 +62,12 @@ def main():
         elif choice == '5':
             temperature_trend_graph()
         elif choice == '6':
-            filter_by_month_season()
-        elif choice == '7':
             predict_tomorrow()
-        elif choice == '8':
+        elif choice == '7':
             compare_years()
-        elif choice == '9':
+        elif choice == '8':
             record_breaking_temps()
-        elif choice == '10':
+        elif choice == '9':
             print("Thanks for using Weather Tracker. Goodbye!")
             break
         else:
