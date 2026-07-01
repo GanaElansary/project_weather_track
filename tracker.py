@@ -267,7 +267,7 @@ def predict_tomorrow():
 
     if len(df)< 3:
         print("Not enough data. Please record at least 3 days to get a prediction.")
-
+        return
     last_few_days= df.tail(3)
 
     predicted_temp = last_few_days['temperature'].mean()
