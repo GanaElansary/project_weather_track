@@ -49,8 +49,8 @@ def main():
     print("Track your local weather and spot patterns over time.")
 
     while True:
-        choice = display_menu()
-
+        choice = display_menu()  ## ask the user which option they want 
+        ## match the choice to its function
         if choice == '1':
             record_observation()
         elif choice == '2':
@@ -69,9 +69,9 @@ def main():
             record_breaking_temps()
         elif choice == '9':
             print("Thanks for using Weather Tracker. Goodbye!")
-            break
+            break  ## leave the while loop 
         else:
-            print("Invalid choice. Please enter a number between 1 and 10.")
+            print("Invalid choice. Please enter a number between 1 and 9.")
 
 
 #### STRETCH 
@@ -89,8 +89,8 @@ def record_breaking_temps():
     coldest = df.loc[df['temperature'].idxmin()]
 
     print("\n=== Record-Breaking Temperatures ===")
-    print(f"Hottest: {hottest['temperature']}C on {hottest['date']}")
-    print(f"Coldest: {coldest['temperature']}C on {coldest['date']}")
+    print(f"Hottest: {hottest['temperature']}C on {hottest['date']}")  ## row index of the highest temp
+    print(f"Coldest: {coldest['temperature']}C on {coldest['date']}") ## rows index of the lowesr temp
 
 # Person 2 - Sara Alnajjar
 def normalize_condition(raw_condition):
@@ -111,12 +111,12 @@ def normalize_condition(raw_condition):
         cutoff=0.6
     )
     if close_matches:
-        matched_lower = close_matches[0]
+        matched_lower = close_matches[0]  ## map the lowercase match back to the properly-capitalized version
         for valid in VALID_CONDITIONS:
             if valid.lower() == matched_lower:
                 return valid
 
-    return None
+    return None ## nothing matched
 
 
 def record_observation():
@@ -131,21 +131,21 @@ def record_observation():
         return
 
     try:
-        temperature = float(input("Enter temperature (°C): "))
+        temperature = float(input("Enter temperature (°C): "))  ## temp must be number
     except ValueError:
         print("Invalid temperature. Please enter a number.")
         return
 
-    raw_condition = input(f"Enter condition ({', '.join(VALID_CONDITIONS)}): ")
+    raw_condition = input(f"Enter condition ({', '.join(VALID_CONDITIONS)}): ")   ### condition run it through a normalize_condition to fix typo/case
     condition = normalize_condition(raw_condition)
     if condition is None:
         print(f"'{raw_condition}' doesn't match a known condition. Please choose from: {', '.join(VALID_CONDITIONS)}.")
         return
-    if condition.lower() != raw_condition.strip().lower():
+    if condition.lower() != raw_condition.strip().lower():  ## if we auto-corrected their input, tell them what we assumed
         print(f"Interpreting '{raw_condition}' as '{condition}'.")
 
     try:
-        humidity = float(input("Enter humidity (%): "))
+        humidity = float(input("Enter humidity (%): "))  ## humid between 0 to 100
         if humidity < 0 or humidity > 100:
             print("Humidity must be between 0 and 100.")
             return
@@ -154,7 +154,7 @@ def record_observation():
         return
 
     try:
-        wind_speed = float(input("Enter wind speed (km/h): "))
+        wind_speed = float(input("Enter wind speed (km/h): "))  ## wind speed, not negative num
         if wind_speed < 0:
             print("Wind speed cannot be negative.")
             return
@@ -162,7 +162,7 @@ def record_observation():
         print("Invalid wind speed. Please enter a number.")
         return
 
-    observation = {
+    observation = {    ### bundle everything into a dict and save it 
         'date': date,
         'temperature': temperature,
         'condition': condition,
@@ -217,9 +217,9 @@ def view_statistics():
         return
 
     print("\n=== Weather Statistics ===")   
-    avg_temp = df['temperature'].mean()
-    min_temp = df['temperature'].min()
-    max_temp = df['temperature'].max()
+    avg_temp = df['temperature'].mean()  ## avg
+    min_temp = df['temperature'].min()  ## lowest
+    max_temp = df['temperature'].max() ## highest
 
     most_common_condition = df['condition'].mode()[0]
     
@@ -243,7 +243,7 @@ def search_by_date():
         print("No records found.")
         return
 
-    result = df[df['date'] == search_date ]
+    result = df[df['date'] == search_date ]  ## keep only rows where the data matches
     
     if result.empty:
         print("No observations found for this date.")
@@ -268,8 +268,8 @@ def predict_tomorrow():
     if len(df)< 3:
         print("Not enough data. Please record at least 3 days to get a prediction.")
         return
-    last_few_days= df.tail(3)
-
+    last_few_days= df.tail(3)  ## the 3 most recent rows
+    # prediction = avg of the last 3 days
     predicted_temp = last_few_days['temperature'].mean()
     predicted_humidity = last_few_days['humidity'].mean()
     predicted_wind = last_few_days['wind_speed'].mean()
@@ -294,9 +294,9 @@ def compare_years():
     if df.empty:
         print("No records found.")
         return
-      
+      ## pull the year out of each date
     df['Year'] = pd.to_datetime(df['date'], format='%m-%d-%Y').dt.year 
-
+        
     summary = df.groupby('Year')['temperature'].agg(['mean' , 'min' , 'max'])
     summary.columns=["Avg Temp" , "Min Temp" , "Max Temp"]
     
