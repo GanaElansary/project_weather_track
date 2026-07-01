@@ -277,7 +277,7 @@ def compare_years():
     print("\n=== Yearly Weather Comparison ===")
 
     if not os.path.exists("weather.csv"):
-        print("No file available .")
+        print("No files available .")
         return
 
     df = pd.read_csv("weather.csv")
