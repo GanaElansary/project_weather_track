@@ -284,5 +284,29 @@ def predict_tomorrow():
     print(f"Predicted Humidity    : {predicted_humidity:.0f}%")
     print(f"Predicted Wind Speed  : {predicted_wind:.1f} km/h")
 
+def compare_years():
+    """Compares average yearly temperatures across different years."""
+    print("\n=== Yearly Weather Comparison ===")
+
+    if not os.path.exists("weather.csv"):
+        print("No files available .")
+        return
+
+    df = pd.read_csv("weather.csv")
+
+    if df.empty:
+        print("No records found.")
+        return
+      
+    df['Year'] = pd.to_datetime(df['date'], format='%m-%d-%Y').dt.year 
+
+    summary = df.groupby('Year')['temperature'].agg(['mean' , 'min' , 'max'])
+    summary.columns=["Avg Temp" , "Min Temp" , "Max Temp"]
+    
+    print(summary)
+    
 if __name__ == "__main__":
     main()
+
+    
+

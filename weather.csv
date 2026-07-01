@@ -3,3 +3,4 @@ date,temperature,condition,humidity,wind_speed
 05-06-2026,22.0,s,55.0,55.0
 01-01-1999,33.0,Rainy,66.0,3.0
 12-12-1999,22.0,Stormy,32.0,20.0
+12-07-2026,20.0,Cloudy,10.0,10.0
