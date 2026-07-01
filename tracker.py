@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+import difflib
 from datetime import datetime     ### IMPORTING 
 
 CSV_FILE = 'weather.csv'
@@ -188,6 +189,7 @@ def view_all_observations():
         return
 
     print(df.to_string(index=False))
+
 
 def temperature_trend_graph():
     """Show a simple text bar-graph of temperature over time."""
