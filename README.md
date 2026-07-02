@@ -22,7 +22,8 @@ Weather tracking app, first project in GA using Steamlit
 
 - Python 3
 - pandas
-- Jupyter Notebook (for running the app)
+- Jupyter Notebook/VS code (for running the app)
+- Streamlit
 
 ## Getting Started
 
@@ -39,6 +40,6 @@ Weather tracking app, first project in GA using Steamlit
 ## Team
 | Names | Role |
 |-|-|
-|Gana Elansary | Person 1|
-|Sara Alnajjar | Person 2|
-|Hawra Alawi   | Person 3|
+|Gana Elansary | Person 1: load_observations(), save_observation(), display_menu(), record_breaking_temps(), main()|
+|Sara Alnajjar | Person 2: record_observation(), view_all_observations(), normalize_condition(), temperature_trend_graph()|
+|Hawra Alawi   | Person 3: view_statistics(), search_by_date(), predict_tomorrow()|
