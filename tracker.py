@@ -22,7 +22,7 @@ def save_observation(observation):
    
     file_exists = os.path.isfile(CSV_FILE)
     new_row = pd.DataFrame([observation])
-    new_row.to_csv(CSV_FILE, mode='a', header=not file_exists, index=False)
+    new_row.to_csv(CSV_FILE, mode='a', header=not file_exists, index=False, lineterminator='\n')
 
 
 ##### Display the main menu and return the user's choice.
