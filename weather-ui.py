@@ -98,6 +98,9 @@ elif page == "Trend":
 
 # ---- Prediction ----
 elif page == "Prediction":
+    """
+    Predictions are calculated by taking the mean of the temp, humidity, wind, condition of the last 3 records
+    """
     if len(df) < 3:
         st.warning("Not enough data. Record at least 3 days for a prediction.")
     else:
