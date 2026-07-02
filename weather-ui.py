@@ -116,7 +116,7 @@ elif page == "Prediction":
 # ---- Compare Years ----
 elif page == "Compare Years":
     plot_df = df.copy()
-    plot_df["Year"] = pd.to_datetime(plot_df["date"], format="%m-%d-%Y").dt.year  ## pull the year out of eaxh date 
+    plot_df["Year"] = pd.to_datetime(plot_df["date"], format="%m-%d-%Y").dt.year  ## pull the year out of each date 
     summary = plot_df.groupby("Year")["temperature"].agg(["mean", "min", "max"]).reset_index()
     summary.columns = ["Year", "Avg", "Min", "Max"]  ## renaming lables 
 
@@ -129,7 +129,7 @@ elif page == "Compare Years":
             use_container_width=True,
         )
     with cols[1].container(border=True):
-        st.dataframe(summary.set_index("Year"), width="stretch")  ## the numbers nect to the chart 
+        st.dataframe(summary.set_index("Year"), width="stretch")  ## the numbers next to the chart 
 
 # ---- Records ----
 elif page == "Records":
