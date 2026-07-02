@@ -92,6 +92,7 @@ def record_breaking_temps():
     print(f"Hottest: {hottest['temperature']}C on {hottest['date']}")  ## row index of the highest temp
     print(f"Coldest: {coldest['temperature']}C on {coldest['date']}") ## rows index of the lowesr temp
 
+
 # Person 2 - Sara Alnajjar
 def normalize_condition(raw_condition):
     # Match user input against VALID_CONDITIONS, ignoring case and minor typos.
@@ -121,46 +122,72 @@ def normalize_condition(raw_condition):
 
 def record_observation():
     # Ask the user for one day's weather, validate it, and save it to the CSV.
+    # Each field keeps re-asking until it gets a valid value (or the user types 'cancel').
     print("\n=== Record New Weather Observation ===")
+    print("(type 'cancel' at any time to go back to the menu)")
 
-    date = input("Enter date (MM-DD-YYYY): ")
-    try:
-        datetime.strptime(date, "%m-%d-%Y")
-    except ValueError:
-        print("Invalid date format. Please use MM-DD-YYYY.")
-        return
-
-    try:
-        temperature = float(input("Enter temperature (°C): "))  ## temp must be number
-    except ValueError:
-        print("Invalid temperature. Please enter a number.")
-        return
-
-    raw_condition = input(f"Enter condition ({', '.join(VALID_CONDITIONS)}): ")   ### condition run it through a normalize_condition to fix typo/case
-    condition = normalize_condition(raw_condition)
-    if condition is None:
-        print(f"'{raw_condition}' doesn't match a known condition. Please choose from: {', '.join(VALID_CONDITIONS)}.")
-        return
-    if condition.lower() != raw_condition.strip().lower():  ## if we auto-corrected their input, tell them what we assumed
-        print(f"Interpreting '{raw_condition}' as '{condition}'.")
-
-    try:
-        humidity = float(input("Enter humidity (%): "))  ## humid between 0 to 100
-        if humidity < 0 or humidity > 100:
-            print("Humidity must be between 0 and 100.")
+    ## ---- date ----
+    while True:
+        date = input("Enter date (MM-DD-YYYY): ")
+        if date.strip().lower() == 'cancel':
             return
-    except ValueError:
-        print("Invalid humidity. Please enter a number.")
-        return
+        try:
+            datetime.strptime(date, "%m-%d-%Y")
+            break  ## valid, move on to the next field
+        except ValueError:
+            print("Invalid date format. Please use MM-DD-YYYY. Try again.")
 
-    try:
-        wind_speed = float(input("Enter wind speed (km/h): "))  ## wind speed, not negative num
-        if wind_speed < 0:
-            print("Wind speed cannot be negative.")
+    ## ---- temperature ----
+    while True:
+        raw_temp = input("Enter temperature (°C): ")
+        if raw_temp.strip().lower() == 'cancel':
             return
-    except ValueError:
-        print("Invalid wind speed. Please enter a number.")
-        return
+        try:
+            temperature = float(raw_temp)  ## temp must be number
+            break
+        except ValueError:
+            print("Invalid temperature. Please enter a number. Try again.")
+
+    ## ---- condition ----
+    while True:
+        raw_condition = input(f"Enter condition ({', '.join(VALID_CONDITIONS)}): ")
+        if raw_condition.strip().lower() == 'cancel':
+            return
+        condition = normalize_condition(raw_condition)  ### run through normalize_condition to fix typo/case
+        if condition is None:
+            print(f"'{raw_condition}' doesn't match a known condition. Please choose from: {', '.join(VALID_CONDITIONS)}. Try again.")
+            continue
+        if condition.lower() != raw_condition.strip().lower():  ## if we auto-corrected their input, tell them what we assumed
+            print(f"Interpreting '{raw_condition}' as '{condition}'.")
+        break
+
+    ## ---- humidity ----
+    while True:
+        raw_humidity = input("Enter humidity (%): ")
+        if raw_humidity.strip().lower() == 'cancel':
+            return
+        try:
+            humidity = float(raw_humidity)  ## humid between 0 to 100
+            if humidity < 0 or humidity > 100:
+                print("Humidity must be between 0 and 100. Try again.")
+                continue
+            break
+        except ValueError:
+            print("Invalid humidity. Please enter a number. Try again.")
+
+    ## ---- wind speed ----
+    while True:
+        raw_wind = input("Enter wind speed (km/h): ")
+        if raw_wind.strip().lower() == 'cancel':
+            return
+        try:
+            wind_speed = float(raw_wind)  ## wind speed, not negative num
+            if wind_speed < 0:
+                print("Wind speed cannot be negative. Try again.")
+                continue
+            break
+        except ValueError:
+            print("Invalid wind speed. Please enter a number. Try again.")
 
     observation = {    ### bundle everything into a dict and save it 
         'date': date,
@@ -200,6 +227,7 @@ def temperature_trend_graph():
         bar_length = max(int(round(row['temperature'])), 0)
         bar = '*' * bar_length
         print(f"{row['date']:>12} | {bar} ({row['temperature']}°C)")
+
         
 #### PERSON 3 _ Hawraa Alawi
 
